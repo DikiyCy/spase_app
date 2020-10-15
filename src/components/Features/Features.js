@@ -1,9 +1,16 @@
 import React from 'react';
-
+import RelaxWrapper from 'react-rellax-wrapper';
 import './features.css';
-import falcon from './falcon-1.png'
+// import falcon from '../img/falcon-1.png'
 
-const Features = () => {
+// const rockets = {
+//     'Falcon 1': 'falcon-1',
+//     'Falcon 9': 'falcon-9',
+//     'Falcon Heavy': 'falcon-heavy',
+//     other: 'starship',
+// };
+
+const Features = ({rocketFeturs}) => {
     return (
         <section className="features">
             <h2 className="features-title">
@@ -34,12 +41,16 @@ const Features = () => {
                         </tr>
                     </thead>
                 </table>
-                <img
-                        src={falcon}
-                        alt="rocket"
-                        className="rocket"
-                        data-rellax-speed="14"
-                />
+                <RelaxWrapper speed={14}>
+                    <img
+                            src="img/falcon-1.png"
+                            alt="rocket"
+                            className="rocket"
+                            data-rellax-speed="14"
+                    />
+
+                </RelaxWrapper>
+
                 <article>
                     <h3 className="features-subtitle">DESCRIPTION</h3>
                     <p className="features-text">
