@@ -1,59 +1,88 @@
 import React, {Component} from 'react';
-import './style.css';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
+import Home from './components/Home/Home';
 import Main from './components/Main/Main';
 import Features from './components/Features/Features';
 import Footer from './components/Footer/Footer';
+import Calendar from './components/Calendar/Calendar';
+import Details from './components/Details/Details';
 
 import FetchData from './service/FetchData';
-// import Calendar from './components/Calendar/Calendar';
-// import Details from './components/Details/Details';
 
+import './style.css';
 export default class App extends Component {
-  fetchData = new FetchData(); // объект с методами
+	fetchData = new FetchData(); // объект с методами
 
-  state = {
-    rocket: 'Falcon 1',
-    rocketFeturs: null,
-    rockets: [],
-  }
+	state = {
+		rocket: 'Falcon 1',
+		rocketFeatures: null,
+		rockets: [],
+		company: null,
+	}
 
-  componentDidMount() {
-    this.updateRocket();
-  }
+	// метод жизненного цикла, который вызывается до рендера
+	componentDidMount() {
+		this.updateRocket();
+		this.updateCompany();
+	}
 
 
-  updateRocket() {
-    this.fetchData.getRocket()
-    .then(data => {
-      this.setState({rockets: data.map(item => item.name)});
-      return data
-    })
-    .then(data => data.find(item => item.name === this.state.rocket))
-    .then(rocketFeatures => this.setState({
-      rocketFeatures  //для использов данных - вызывать второй парамет () => {}
-    }));
-  }
+	updateRocket() {
+		this.fetchData.getRocket()
+		.then(data => {
+			this.setState({rockets: data.map(item => item.name)});
+			return data
+		})
+		.then(data => data.find(item => item.name === this.state.rocket))
+		.then(rocketFeatures => this.setState({
+			rocketFeatures  //хотим что-то сразу сделать с данными - вызываем после {} колбэк
+		}))
+		// .then(() => console.log(this.state.rocketFeatures));
+	}
 
-  changeRockets = (rocket) => {  //стрелочная позволяет избавиться от this
-    this.setState({
-      rocket
-    }, this.updateRocket);
-  }
+	changeRockets = (rocket) => {  //стрелочная позволяет избавиться от this
+		this.setState({
+			rocket,
+		}, this.updateRocket);
+	}
 
-  render() {
-    console.log(this.state.rocketFeturs);
-    return (
-      <>
-        <Header rockets={this.state.rockets} changeRockets={this.changeRockets}/>
-        <Main rocket={this.state.rocket}/>
-        <Features rocketFeturs={this.state.rocketFeturs}/>
-        {/* <Calendar /> */}
-        {/* <Details /> */}
-        <Footer />
-      </>
-    )
-  }
+	updateCompany = () => {
+		this.fetchData.getCompany()
+			.then(company => {
+				return this.setState({
+					company
+				})
+			})
+
+	}
+
+	render() {
+		// console.log(this.state);
+		return (
+			<BrowserRouter>
+				<Header rockets={this.state.rockets} changeRockets={this.changeRockets}/>
+				{/* страница, котор отображ п/у, т.к. path='/'*/}
+				<Route path='/' exact>
+					{/* можно сделать страницу 404 */}
+					{this.state.company && <Home company={this.state.company}/>}
+				</Route>
+				<Route path='/rocket'>
+					<Main rocket={this.state.rocket}/>
+					{/* при первом рендере отправился null => сделать проверку на наличие данных */}
+					{this.state.rocketFeatures && <Features {...this.state.rocketFeatures}/>}
+				</Route>
+				<Route path='/calendar'>
+					<Calendar />
+				</Route>
+				<Route path='/Details'>
+					<Details />
+				</Route>
+				{/* раскрыли рестом объект для передачи 4-х свойств
+					обращение к неуществ. свойству, напрю., this.state?.company*/}
+				{this.state.company && <Footer {...this.state.company}/>}
+
+			</BrowserRouter>
+		)
+	}
 }
-
-// export default App;

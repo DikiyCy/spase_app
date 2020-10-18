@@ -1,64 +1,77 @@
 import React from 'react';
 import RelaxWrapper from 'react-rellax-wrapper';
 import './features.css';
-// import falcon from '../img/falcon-1.png'
 
-// const rockets = {
-//     'Falcon 1': 'falcon-1',
-//     'Falcon 9': 'falcon-9',
-//     'Falcon Heavy': 'falcon-heavy',
-//     other: 'starship',
-// };
-
-const Features = ({rocketFeturs}) => {
+const rocketImages = {
+    'Falcon 1': 'falcon-1',
+    'Falcon 9': 'falcon-9',
+    'Falcon Heavy': 'falcon-heavy',
+    'Starship': 'starship'
+};
+const Features = (rocketFeatures) => {
+    const {name, description, diameter, height, mass, payload_weights: payloadWeights} = rocketFeatures;
     return (
-        <section className="features">
-            <h2 className="features-title">
-                Falcon 1 <br/>Overview
-            </h2>
-            <div className="overview">
+            <section className="features">
+                <h2 className="features-title">
+                    {name} <br/>Overview
+                </h2>
+                <div className="overview">
 
-                <table className="table">
-                    <caption className="table-title">
-                        Size
-                    </caption>
-                    <thead>
-                        <tr>
-                            <td className="table-column">HEIGHT</td>
-                            <td className="table-column">22.25 m / 73 ft</td>
-                        </tr>
-                        <tr>
-                            <td className="table-column">DIAMETER</td>
-                            <td className="table-column">1.68 m / 5.5 ft</td>
-                        </tr>
-                        <tr>
-                            <td className="table-column">MASS</td>
-                            <td className="table-column">30,146 kg / 66,460 lb</td>
-                        </tr>
-                        <tr>
-                            <td className="table-column">PAYLOAD TO LEO</td>
-                            <td className="table-column">450 kg / 992 lb</td>
-                        </tr>
-                    </thead>
-                </table>
-                <RelaxWrapper speed={14}>
-                    <img
-                            src="img/falcon-1.png"
-                            alt="rocket"
-                            className="rocket"
-                            data-rellax-speed="14"
-                    />
+                    <table className="table">
+                        <caption className="table-title">
+                            Size
+                        </caption>
+                        <thead>
+                            <tr>
+                                <td className="table-column">HEIGHT</td>
+                                <td className="table-column">
+                                    {height.meters} / {height.feet}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="table-column">DIAMETER</td>
+                                <td className="table-column">
+                                    {diameter.meters} / {diameter.feet}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="table-column">MASS</td>
+                                <td className="table-column">
+                                    {mass.kg} / {mass.lb}
+                                    </td>
+                            </tr>
+                            {/* несколько элементов - используем массив */}
+                            {payloadWeights.map(item => {
+                                return (
+                                    <tr key={item.id}>
+                                        <td className="table-column">PAYLOAD TO {item.id.toUpperCase()}</td>
+                                        <td className="table-column">
+                                            {item.kg} / {item.lb}
+                                        </td>
+                                    </tr>
+                                )
+                            })}
 
-                </RelaxWrapper>
+                        </thead>
+                    </table>
+                    <RelaxWrapper speed={14}>
+                        <img
+                                src={`img/${rocketImages[name]}.png`}
+                                alt="rocket"
+                                className="rocket"
+                                data-rellax-speed="14"
+                        />
 
-                <article>
-                    <h3 className="features-subtitle">DESCRIPTION</h3>
-                    <p className="features-text">
-                        The Falcon 1 was an expendable launch system privately developed and manufactured by SpaceX during 2006-2009. On 28 September 2008, Falcon 1 became the first privately-developed liquid-fuel launch vehicle to go into orbit around the Earth.
-                    </p>
-                </article>
-            </div>
-        </section>
+                    </RelaxWrapper>
+
+                    <article>
+                        <h3 className="features-subtitle">DESCRIPTION</h3>
+                        <p className="features-text">
+                            {description}
+                        </p>
+                    </article>
+                </div>
+            </section>
     )
 }
 
