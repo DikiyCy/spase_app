@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Home from './components/Home/Home';
-import Main from './components/Main/Main';
 import Features from './components/Features/Features';
 import Footer from './components/Footer/Footer';
 import Calendar from './components/Calendar/Calendar';
@@ -63,21 +62,22 @@ export default class App extends Component {
 			<BrowserRouter>
 				<Header rockets={this.state.rockets} changeRockets={this.changeRockets}/>
 				{/* страница, котор отображ п/у, т.к. path='/'*/}
-				<Route path='/' exact>
+				{/* для передачи пропсов в компонент роутера - render */}
+				<Route path='/'
+					exact render={() => {
+					return this.state.company && <Home company={this.state.company}/>
+				}}/>
 					{/* можно сделать страницу 404 */}
-					{this.state.company && <Home company={this.state.company}/>}
-				</Route>
-				<Route path='/rocket'>
-					<Main rocket={this.state.rocket}/>
-					{/* при первом рендере отправился null => сделать проверку на наличие данных */}
-					{this.state.rocketFeatures && <Features {...this.state.rocketFeatures}/>}
-				</Route>
-				<Route path='/calendar'>
-					<Calendar />
-				</Route>
-				<Route path='/Details'>
-					<Details />
-				</Route>
+				<Route
+					path='/rocket'
+					render={() => {
+						/* при первом рендере отправился null => сделать проверку на наличие данных */
+						return this.state.rocketFeatures && <Features {...this.state.rocketFeatures}/>
+					}}
+				/>
+				<Route path='/calendar' component={Calendar} />
+				{/* создали пропс, относ к роуту, когда сом={det}":id" - Позволяет передать в пропс объект из которого можно через match вытащить id */}
+				<Route path='/details/:id' component={Details} />
 				{/* раскрыли рестом объект для передачи 4-х свойств
 					обращение к неуществ. свойству, напрю., this.state?.company*/}
 				{this.state.company && <Footer {...this.state.company}/>}
