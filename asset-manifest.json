@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/spase_app/static/css/main.22547423.chunk.css",
+    "main.js": "/spase_app/static/js/main.c1fedc64.chunk.js",
+    "main.js.map": "/spase_app/static/js/main.c1fedc64.chunk.js.map",
+    "runtime-main.js": "/spase_app/static/js/runtime-main.5c6930ef.js",
+    "runtime-main.js.map": "/spase_app/static/js/runtime-main.5c6930ef.js.map",
+    "static/js/2.0208903d.chunk.js": "/spase_app/static/js/2.0208903d.chunk.js",
+    "static/js/2.0208903d.chunk.js.map": "/spase_app/static/js/2.0208903d.chunk.js.map",
+    "index.html": "/spase_app/index.html",
+    "precache-manifest.ea6a4bd5a3732970bbbf2e70a3921194.js": "/spase_app/precache-manifest.ea6a4bd5a3732970bbbf2e70a3921194.js",
+    "service-worker.js": "/spase_app/service-worker.js",
+    "static/css/main.22547423.chunk.css.map": "/spase_app/static/css/main.22547423.chunk.css.map",
+    "static/js/2.0208903d.chunk.js.LICENSE.txt": "/spase_app/static/js/2.0208903d.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/spase_app/static/media/logo.d5ab31ce.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5c6930ef.js",
+    "static/js/2.0208903d.chunk.js",
+    "static/css/main.22547423.chunk.css",
+    "static/js/main.c1fedc64.chunk.js"
+  ]
+}
